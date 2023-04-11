@@ -24,4 +24,41 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+
+  font-family: "grenadine-mvb", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  /* font-family: 'JetBrains Mono', monospace; */
+}
+
+.main-title {
+  font-family: "grenadine-mvb", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.style-bg {
+  background-image: url("../../public/images/bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.block-card {
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.visuallyHidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
