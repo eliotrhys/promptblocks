@@ -68,16 +68,22 @@ export default function Home() {
   const filteredPromptBlocks = promptBlocks.filter((block) => {
     return block.promptStrings.some((prompt) => prompt.toLowerCase().includes(searchTerm.toLowerCase()));
   });
+  
+  function handleCopyAllClick(promptStrings: string[]) 
+  {
+    const textToCopy = promptStrings.join(", ");
+    navigator.clipboard.writeText(textToCopy);
+  }
 
   return (
-    <main className="min-h-screen style-bg">
+    <main className="h-screen fixed overflow-scroll style-bg mx-auto">
         
-      <div className="grid grid-cols-12 w-full min-h-screen">
-        <div className="col-span-12 sm:col-span-3 min-h-full px-4 xl:px-8 pt-10">
+      <div className="grid grid-cols-12 gap-4 w-full min-h-screen px-4">
+        <div className="col-span-12 md:col-span-4 xl:col-span-3 min-h-full pt-10">
 
           <div className="mb-6">
-            <h1 className="main-title text-xl xl:text-5xl">🧠 PROMPT</h1>
-            <h1 className="main-title text-3xl xl:text-6xl mb-4 text-yellow-400">🧱 BLOCKS</h1>
+            <h1 className="main-title text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white">🧠 PROMPT</h1>
+            <h1 className="main-title text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4 text-yellow-400">🧱 BLOCKS</h1>
             <p className="text-sm text-slate-400">One-Tap Copy your AI Image Prompts!</p>
           </div>
 
@@ -107,7 +113,12 @@ export default function Home() {
                         onDrop={handleDrop}
                         onDragOver={handleDragOver}
                       >
-                        <p>Click or drag to add image</p>
+                        <div>
+                          <div>
+                            <i className="fa-solid fa-circle-plus text-4xl mb-4"></i>
+                          </div>
+                          <p>Click or drag to add image</p>
+                        </div>
                       </label>
                     </div>
                   )}
@@ -119,23 +130,29 @@ export default function Home() {
               <p className="text-center mb-4">Remember to split by commas!</p>
 
               <div>
-                <button type="submit" className="p-4 border-4 border-black bg-green-500 flex items-center justify-center w-full rounded-md">Add Block</button>
+                <button type="submit" className="p-4 border-4 border-black bg-green-500 flex items-center justify-center w-full rounded-md text-center">
+                  <i className="fa-solid fa-circle-plus text-xl"></i>
+                  <div className="ms-2">Add Block</div>
+                </button>
               </div>
             </form>
 
           </div>
         </div>
 
-        <div className="col-span-12 sm:col-span-9 max-h-screen overflow-scroll px-4 pt-10 relative">
+        <div className="col-span-12 md:col-span-8 xl:col-span-9 max-h-screen md:overflow-scroll pt-10 relative">
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sticky top-0 z-10">
-            <div>
-              <input className="border-4 border-black bg-black text-white text-black p-4 rounded-md w-full mb-4" onChange={handleSearchChange} placeholder="Search prompts" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 md:sticky top-0 z-10">
+            <div className="border-4 border-black bg-black text-white text-black p-4 rounded-md w-full xl:mb-4 flex items-center w-full">
+              <div className="me-4">
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </div>
+              <input className="bg-transparent w-full" onChange={handleSearchChange} placeholder="Search prompts" />
             </div>
             <div className="col-span-3"></div>
           </div>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4">
 
             { filteredPromptBlocks.map((block: Block, index: number) => (
               <div key={index} className="block-card">
@@ -148,7 +165,10 @@ export default function Home() {
                   :
                   <div>
                     <label className="bg-black rounded-t-lg py-10 mb-4 flex items-center justify-center">
-                      <p>Add image</p>
+                      <div className="text-center">
+                        <i className="fa-solid fa-circle-plus text-4xl mb-4"></i>
+                        <p>Add image</p>
+                      </div>
                     </label>
                   </div>
                 }
@@ -157,15 +177,27 @@ export default function Home() {
                 <div className="flex items-center justify-between px-4">
                   <div className="text-xs">Tap prompts to copy</div>
                   <div className="flex">
-                    <div className="py-1 px-2 bg-green-500 text-white rounded-md text-xs mr-2">Edit</div>
-                    <div className="py-1 px-2 bg-blue-500 text-white rounded-md text-xs">Copy all</div>
+                    <div className="py-1 px-2 bg-green-500 text-white rounded-md text-xs mr-2 cursor-pointer">Edit</div>
+                    <div 
+                      className="py-1 px-2 bg-blue-500 text-white rounded-md text-xs cursor-pointer" 
+                      onClick={() => handleCopyAllClick(block.promptStrings)}
+                    >
+                      <span>Copy all</span>
+                    </div>
                   </div>
                   
                 </div>
-                <div className="flex flex-wrap p-4">
-                  { block.promptStrings.map((promptString: string, index: number) => (
-                    <div key={index} className="block-card rounded-xs text-sm px-4 border-2 text-black border-black mr-2 mb-2">{promptString}</div>
-                  ))}
+                <div className="p-4">
+
+                  <div className="flex flex-wrap mb-4">
+                    { block.promptStrings.map((promptString: string, index: number) => (
+                      <div key={index} className="tag-card rounded text-sm px-4 border-2 text-white border-black mr-2 mb-2 cursor-pointer">{promptString}</div>
+                    ))}
+                  </div>
+
+                  <div>
+                    <textarea name="" id="" rows={6} className="border-4 border-black bg-black text-white text-black p-4 rounded-md w-full"></textarea>
+                  </div>
                 </div>
               </div>
             ))}

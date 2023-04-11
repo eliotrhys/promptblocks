@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 body {
   font-family: "grenadine-mvb", sans-serif;
   font-weight: 400;
@@ -22,24 +23,24 @@ body {
   background-attachment: fixed;
 }
 
-.block-card, .tag-card {
+.block-card {
   /* background: rgba( 255, 255, 255, 0.25 ); */
-  -webkit-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  // background: rgba(175, 194, 255, 0.25%);
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  -webkit-transition: 0.1s ease;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
   transition: 0.1s ease;
-}
 
-.block-card:hover, .tag-card:hover {
-  background: rgba(124, 155, 255, 0.25);
+  &:hover {
+    background: darken(rgba(175, 194, 255, 0.25%), 10%);
+  }
 }
 
 .tag-card {
-  background: rgba(175, 194, 255, 0.5);
+  @extend .block-card;
+  background: rgba(175, 194, 255, 0.50%);
   background: rgba(175, 194, 255, 0.25);
 }
 
@@ -53,4 +54,3 @@ body {
   position: absolute;
   width: 1px;
 }
-/*# sourceMappingURL=globals.css.map */
