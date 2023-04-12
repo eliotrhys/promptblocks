@@ -99,6 +99,7 @@ export default function Home() {
             <h1 className="main-title text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white">🧠 PROMPT</h1>
             <h1 className="main-title text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4 text-yellow-400">🧱 BLOCKS</h1>
             <p className="text-sm text-slate-400">One-Tap Copy your AI Image Prompts!</p>
+            <button className="bg-blue-500 text-white">reifjef</button>
           </div>
 
           <NewPromptForm 
