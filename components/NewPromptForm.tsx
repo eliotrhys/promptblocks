@@ -8,6 +8,7 @@ interface NewPromptFormProps
     onHandleDrop: (event: any) => void;
     onHandleDragOver: (event: any) => void;
     newImage: string | undefined;
+    newPrompt: string;
 }
   
 export default function NewPromptForm(props: NewPromptFormProps) {
@@ -51,12 +52,12 @@ export default function NewPromptForm(props: NewPromptFormProps) {
 
                 </div>
 
-                <textarea className="border-4 border-black bg-black text-white text-black p-4 rounded-md w-full mb-4" onChange={props.onHandlePromptChange} rows={6} placeholder="Enter your prompt, separate using commas!" />
+                <textarea className="border-4 border-black bg-black text-white p-4 rounded-md w-full mb-4" value={props.newPrompt} onChange={props.onHandlePromptChange} rows={6} placeholder="Enter your prompt, separate using commas!" />
 
                 <p className="text-center mb-4">Remember to split by commas!</p>
 
                 <div>
-                    <button type="submit" className="p-4 border-4 border-black bg-green-500 flex items-center justify-center w-full rounded-md text-center">
+                    <button type="submit" className="p-4 bg-green-500 flex items-center justify-center w-full rounded-md text-center shadow-lg shadow-green-500/50">
                         <i className="fa-solid fa-circle-plus text-xl"></i>
                         <div className="ms-2">Add Block</div>
                     </button>

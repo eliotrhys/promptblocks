@@ -9,3 +9,4 @@ Technologies used:
 - Next.js
 - Framer Motion
 - IndexedDB
+- Local Storage

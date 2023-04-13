@@ -7,6 +7,7 @@ import bg from '../../public/images/bg.png';
 import Block from './types/Block';
 import NewPromptForm from '../../components/NewPromptForm';
 import PromptBlock from '../../components/PromptBlock';
+import PromptBuilderBlock from '../../components/PromptBuilderBlock';
 
 export default function Home() {
   const [promptBlocks, setPromptBlocks] = useState<Block[]>([]);
@@ -14,6 +15,7 @@ export default function Home() {
   const [newPrompt, setNewPrompt] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [showTextareaIndex, setShowTextareaIndex] = useState<number>(-1);
+  const [promptBuilderStrings, setPromptBuilderStrings] = useState<string[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleEditClick = (index: number) => {
@@ -29,15 +31,19 @@ export default function Home() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-
-    const commaSeparatedString = newPrompt.split(",").map(str => str.trim());
+  
+    const commaSeparatedString = newPrompt
+      .split(",")
+      .map(str => str.trim())
+      .filter(str => str !== "");
+  
     const newBlock = { promptStrings: commaSeparatedString, imgSrc: newImage };
-
+  
     const updatedPromptBlocks = [...promptBlocks, newBlock];
     setPromptBlocks(updatedPromptBlocks);
-    setNewPrompt("");
     setNewImage("");
-
+    setNewPrompt("");
+  
     // Save the updated promptBlocks array to localStorage
     localStorage.setItem("promptBlocks", JSON.stringify(updatedPromptBlocks));
   }
@@ -89,37 +95,57 @@ export default function Home() {
     navigator.clipboard.writeText(textToCopy);
   }
 
+  const handlePromptStringClick = (event: any, promptString: string) => {
+    event.preventDefault();
+    setPromptBuilderStrings([...promptBuilderStrings, promptString]);
+  }
+
+  const handleClearPromptBuilderStrings = (event: any) => {
+    event.preventDefault();
+    setPromptBuilderStrings([]);
+    console.log("CLEAR");
+  }
+
   return (
     <main className="h-screen w-screen fixed overflow-scroll style-bg mx-auto">
         
       <div className="grid grid-cols-12 gap-4 w-full min-h-screen px-4">
-        <div className="col-span-12 md:col-span-4 xl:col-span-3 min-h-full pt-10">
+        <div className="col-span-12 md:col-span-4 xl:col-span-3 min-h-full pt-4 md:pt-10">
 
           <div className="mb-6">
             <h1 className="main-title text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white">🧠 PROMPT</h1>
             <h1 className="main-title text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4 text-yellow-400">🧱 BLOCKS</h1>
             <p className="text-sm text-slate-400">One-Tap Copy your AI Image Prompts!</p>
-            <button className="bg-blue-500 text-white">reifjef</button>
           </div>
 
-          <NewPromptForm 
-            onHandlePromptChange={handlePromptChange} 
-            onHandleDrop={handleDrop} 
-            onHandleDragOver={handleDragOver} 
-            onHandleSubmit={handleSubmit}
-            onHandleImageChange={handleImageChange}
-            newImage={newImage}
+          <div className="mb-4">
+            <NewPromptForm 
+              onHandlePromptChange={handlePromptChange} 
+              onHandleDrop={handleDrop} 
+              onHandleDragOver={handleDragOver} 
+              onHandleSubmit={handleSubmit}
+              onHandleImageChange={handleImageChange}
+              newImage={newImage}
+              newPrompt={newPrompt}
+            />
+          </div>
+
+          <PromptBuilderBlock 
+            promptBuilderStrings={promptBuilderStrings} 
+            onHandleCopyAllClick={handleCopyAllClick}
+            onHandleClearPromptBuilderStrings={handleClearPromptBuilderStrings}
           />
+
         </div>
 
         <div className="col-span-12 md:col-span-8 xl:col-span-9 max-h-screen md:overflow-scroll pt-10 relative">
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 md:sticky top-0 z-10">
-            <div className="border-4 border-black bg-black text-white text-black p-4 rounded-md w-full xl:mb-4 flex items-center w-full">
-              <div className="me-4">
+            <div className="border-4 border-black bg-black text-white rounded-md w-full xl:mb-4 flex items-center">
+              <div className="ps-4">
                 <i className="fa-solid fa-magnifying-glass"></i>
               </div>
-              <input className="bg-transparent w-full" onChange={handleSearchChange} placeholder="Search prompts" />
+              <input className="bg-transparent w-full p-4" onChange={handleSearchChange} placeholder="Search prompts" />
             </div>
             <div className="col-span-3"></div>
           </div>
@@ -135,6 +161,7 @@ export default function Home() {
                 onHandleCopyAllClick={handleCopyAllClick}
                 onHandleEditClick={handleEditClick}
                 onHandleTextareaBlur={handleTextareaBlur}
+                onHandlePromptStringClick={handlePromptStringClick}
                 textareaRef={textareaRef}
               />
             ))}
