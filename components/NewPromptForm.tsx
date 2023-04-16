@@ -16,9 +16,31 @@ export default function NewPromptForm(props: NewPromptFormProps) {
     return (
         <div className="block-card p-4">
 
-            <form onSubmit={props.onHandleSubmit}>
+            <div className="mb-4">
+                <div className="whitespace-nowrap text-xl">Add New Prompt Block</div>
+            </div>
 
-                <div>
+            <form className="grid grid-cols-12 gap-4" onSubmit={props.onHandleSubmit}>
+
+                <div className="col-span-8">
+                    <textarea className="border-4 border-black bg-black text-white p-4 rounded-md w-full mb-4" value={props.newPrompt} onChange={props.onHandlePromptChange} rows={6} placeholder="Enter your prompt, separate using commas!" />
+
+                    <p className="text-center mb-4">Remember to split by commas!</p>
+
+                    <div>
+                        <button type="submit" className="p-4 bg-green-500 flex items-center justify-center w-full rounded-md text-center shadow-lg shadow-green-500/50">
+                            <i className="fa-solid fa-circle-plus text-xl"></i>
+                            <div className="ms-2">Add Block</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="col-span-4">
+
+                    <div className="grid grid-cols-2 mb-4">
+                        <div className="bg-blue-500 p-2 rounded-md flex items-center justify-center text-white mr-2">Upload file</div>
+                        <div className="bg-transparent p-2 rounded-md flex items-center justify-center text-white">Image link</div>
+                    </div>
 
                     { props.newImage ? (
                         <img src={props.newImage} alt="Image" className="w-full rounded-lg mb-4" />
@@ -41,10 +63,10 @@ export default function NewPromptForm(props: NewPromptFormProps) {
                                 onDragOver={props.onHandleDragOver}
                             >
                                 <div>
-                                <div>
-                                    <i className="fa-solid fa-circle-plus text-4xl mb-4"></i>
-                                </div>
-                                <p>Click or drag to add image</p>
+                                    <div>
+                                        <i className="fa-solid fa-circle-plus text-4xl mb-4"></i>
+                                    </div>
+                                    <p>Click or drag to add image</p>
                                 </div>
                             </label>
                         </div>
@@ -52,16 +74,8 @@ export default function NewPromptForm(props: NewPromptFormProps) {
 
                 </div>
 
-                <textarea className="border-4 border-black bg-black text-white p-4 rounded-md w-full mb-4" value={props.newPrompt} onChange={props.onHandlePromptChange} rows={6} placeholder="Enter your prompt, separate using commas!" />
+                
 
-                <p className="text-center mb-4">Remember to split by commas!</p>
-
-                <div>
-                    <button type="submit" className="p-4 bg-green-500 flex items-center justify-center w-full rounded-md text-center shadow-lg shadow-green-500/50">
-                        <i className="fa-solid fa-circle-plus text-xl"></i>
-                        <div className="ms-2">Add Block</div>
-                    </button>
-                </div>
             </form>
           </div>
     )

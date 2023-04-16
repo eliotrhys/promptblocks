@@ -1,8 +1,6 @@
 "use client"
 
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react';
-import bg from '../../public/images/bg.png';
 
 import Block from './types/Block';
 import NewPromptForm from '../../components/NewPromptForm';
@@ -103,31 +101,29 @@ export default function Home() {
   const handleClearPromptBuilderStrings = (event: any) => {
     event.preventDefault();
     setPromptBuilderStrings([]);
-    console.log("CLEAR");
   }
 
   return (
     <main className="h-screen w-screen fixed overflow-scroll style-bg mx-auto">
         
       <div className="grid grid-cols-12 gap-4 w-full min-h-screen px-4">
-        <div className="col-span-12 md:col-span-4 xl:col-span-3 min-h-full pt-4 md:pt-10">
+        <div className="col-span-12 md:col-span-4 xl:col-span-3 min-h-full pt-4 md:pt-6">
 
           <div className="mb-6">
-            <h1 className="main-title text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white">🧠 PROMPT</h1>
-            <h1 className="main-title text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4 text-yellow-400">🧱 BLOCKS</h1>
-            <p className="text-sm text-slate-400">One-Tap Copy your AI Image Prompts!</p>
-          </div>
+            <div className="flex items-center">
+              <div className="mr-2">
+                <h1 className="main-title text-xl md:text-2xl lg:text-3xl xl:text-3xl text-white">🧠</h1>
+                <h1 className="main-title text-xl md:text-2xl lg:text-3xl xl:text-3xl text-white ml-4">🧱</h1>
+              </div>
 
-          <div className="mb-4">
-            <NewPromptForm 
-              onHandlePromptChange={handlePromptChange} 
-              onHandleDrop={handleDrop} 
-              onHandleDragOver={handleDragOver} 
-              onHandleSubmit={handleSubmit}
-              onHandleImageChange={handleImageChange}
-              newImage={newImage}
-              newPrompt={newPrompt}
-            />
+              <div>
+                <div className="flex">
+                  <h1 className="main-title text-xl md:text-2xl lg:text-3xl xl:text-3xl text-white"> PROMPT</h1>
+                  <h1 className="main-title text-2xl md:text-3xl lg:text-4xl xl:text-3xl text-yellow-400">BLOCKS</h1>
+                </div>
+                <p className="text-sm text-slate-400">One-Tap Copy your AI Image Prompts!</p>
+              </div>
+            </div>
           </div>
 
           <PromptBuilderBlock 
@@ -150,7 +146,19 @@ export default function Home() {
             <div className="col-span-3"></div>
           </div>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-4">
+          <div className="mb-4">
+            <NewPromptForm 
+              onHandlePromptChange={handlePromptChange} 
+              onHandleDrop={handleDrop} 
+              onHandleDragOver={handleDragOver} 
+              onHandleSubmit={handleSubmit}
+              onHandleImageChange={handleImageChange}
+              newImage={newImage}
+              newPrompt={newPrompt}
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 xxl:grid-cols-4 gap-4">
 
             { filteredPromptBlocks.map((block: Block, index: number) => (
               <PromptBlock 
