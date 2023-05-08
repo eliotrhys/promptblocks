@@ -107,7 +107,7 @@ export default function Home() {
     <main className="h-screen w-screen fixed overflow-scroll style-bg mx-auto">
         
       <div className="grid grid-cols-12 gap-4 w-full min-h-screen px-4">
-        <div className="col-span-12 md:col-span-4 xl:col-span-3 min-h-full pt-4 md:pt-6">
+        <div className="col-span-12 md:col-span-4 xl:col-span-3 min-h-full pt-4 md:pt-6 relative">
 
           <div className="mb-6">
             <div className="flex items-center">
@@ -134,10 +134,10 @@ export default function Home() {
 
         </div>
 
-        <div className="col-span-12 md:col-span-8 xl:col-span-9 max-h-screen md:overflow-scroll pt-10 relative">
+        <div className="col-span-12 md:col-span-8 xl:col-span-9 max-h-screen md:overflow-scroll lg:pt-10 relative">
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 md:sticky top-0 z-10">
-            <div className="border-4 border-black bg-black text-white rounded-md w-full xl:mb-4 flex items-center">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 md:sticky top-0 z-10">
+            <div className="border-4 border-black bg-black text-white rounded-md w-full xl:mb-4 flex items-center col-span-4 xl:col-span-1 block-card">
               <div className="ps-4">
                 <i className="fa-solid fa-magnifying-glass"></i>
               </div>
@@ -158,23 +158,41 @@ export default function Home() {
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 xxl:grid-cols-4 gap-4">
+          { filteredPromptBlocks.length > 0 ? 
 
-            { filteredPromptBlocks.map((block: Block, index: number) => (
-              <PromptBlock 
-                block={block} 
-                key={index} 
-                index={index}
-                showTextareaIndex={showTextareaIndex}
-                onHandleCopyAllClick={handleCopyAllClick}
-                onHandleEditClick={handleEditClick}
-                onHandleTextareaBlur={handleTextareaBlur}
-                onHandlePromptStringClick={handlePromptStringClick}
-                textareaRef={textareaRef}
-              />
-            ))}
-           
-          </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 xxl:grid-cols-4 gap-4">
+            
+              { filteredPromptBlocks.map((block: Block, index: number) => (
+                <PromptBlock 
+                  block={block} 
+                  key={index} 
+                  index={index}
+                  showTextareaIndex={showTextareaIndex}
+                  onHandleCopyAllClick={handleCopyAllClick}
+                  onHandleEditClick={handleEditClick}
+                  onHandleTextareaBlur={handleTextareaBlur}
+                  onHandlePromptStringClick={handlePromptStringClick}
+                  textareaRef={textareaRef}
+                />
+                ))}
+              </div> 
+            :
+              <div className="block-card lg:w-1/2 mb-4">
+                <div className="p-4 border-b border-block-card mx-auto flex flex-col justify-center">
+                  <h2 className="text-md mb-4 text-center lg:text-left">Welcome to Promptblocks</h2>
+                  <div className="bg-yellow-400 p-2 text-center text-black inline-block rounded-lg text-sm mx-auto lg:mx-0">🚧 Promptblocks is under construction!</div>
+                </div>
+                <div className="container mx-auto">
+                  <ul className="list-disc p-8">
+                    <li className="mb-4">🧠 🧱 Promptblocks is a lightweight place to store AI prompts in your browser</li>
+                    <li className="mb-4">🏠 📦 Uses Local Storage so you can use and browse offline</li>
+                    <li className="mb-4">😬 ⚠️ Storage is limited to 5MB at the moment, soon we will be moving to IndexedDB with much more space</li>
+                    <li>💻 🔗 Image web links support coming soon</li>
+                  </ul>
+                </div>
+              </div>
+          }
+
         </div>
       </div>
     </main>
